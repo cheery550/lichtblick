@@ -510,7 +510,6 @@ function WorkspaceContent(props: WorkspaceProps): React.JSX.Element {
         params: unappliedSourceArgs.dsParams,
       });
       selectEvent(unappliedSourceArgs.dsParams?.eventId);
-      setSelectedLayoutId(unappliedSourceArgs.dsParams?.layoutId as LayoutID);
       setUnappliedSourceArgs({ ds: undefined, dsParams: undefined });
     }
   }, [selectEvent, selectSource, unappliedSourceArgs, setUnappliedSourceArgs]);
@@ -533,6 +532,19 @@ function WorkspaceContent(props: WorkspaceProps): React.JSX.Element {
     seek(unappliedTime.time);
     setUnappliedTime({ time: undefined });
   }, [playerPresence, seek, unappliedTime]);
+
+  const [unappliedLayoutId, setUnappliedLayoutId] = useState(
+    targetUrlState ? { layoutId: targetUrlState.layoutId } : undefined,
+  );
+
+  useEffect(() => {
+    if (unappliedLayoutId?.layoutId == undefined) {
+      return;
+    }
+
+    setSelectedLayoutId(unappliedLayoutId.layoutId as LayoutID);
+    setUnappliedLayoutId({ layoutId: undefined });
+  }, [setSelectedLayoutId, unappliedLayoutId]);
 
   useSeekTimeFromCLI();
 

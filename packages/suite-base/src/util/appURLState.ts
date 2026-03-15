@@ -80,6 +80,7 @@ export function parseAppURLState(url: URL): AppURLState | undefined {
   const ds = url.searchParams.get("ds") ?? undefined;
   const timeString = url.searchParams.get("time");
   const time = parseTimeUrlString(timeString ?? undefined);
+  const layoutId = url.searchParams.get("layoutId") ?? undefined;
   const dsParams: Record<string, string> = {};
   url.searchParams.forEach((v, k) => {
     if (k && v && k.startsWith("ds.")) {
@@ -99,6 +100,7 @@ export function parseAppURLState(url: URL): AppURLState | undefined {
       time,
       ds,
       dsParams: _.isEmpty(dsParams) ? undefined : dsParams,
+      layoutId,
     },
     _.isEmpty,
   );
