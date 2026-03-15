@@ -3,6 +3,10 @@ FROM node:22 AS build
 WORKDIR /src
 COPY . ./
 
+ENV PLAYWRIGHT_DOWNLOAD_HOST="https://npmmirror.com/mirrors/playwright"
+ENV ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
+ENV ELECTRON_BUILDER_BINARIES_MIRROR="https://npmmirror.com/mirrors/electron/"
+
 RUN corepack enable
 RUN yarn install --immutable
 
