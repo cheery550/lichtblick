@@ -59,7 +59,9 @@ import { WorkspaceDialogs } from "@lichtblick/suite-base/components/WorkspaceDia
 import { AllowedFileExtensions } from "@lichtblick/suite-base/constants/allowedFileExtensions";
 import { useAppContext } from "@lichtblick/suite-base/context/AppContext";
 import {
+  LayoutID,
   LayoutState,
+  useCurrentLayoutActions,
   useCurrentLayoutSelector,
 } from "@lichtblick/suite-base/context/CurrentLayoutContext";
 import {
@@ -493,6 +495,7 @@ function WorkspaceContent(props: WorkspaceProps): React.JSX.Element {
   );
 
   const selectEvent = useEvents(selectSelectEvent);
+  const { setSelectedLayoutId } = useCurrentLayoutActions();
   // Load data source from URL.
   useEffect(() => {
     if (!unappliedSourceArgs) {
@@ -507,6 +510,7 @@ function WorkspaceContent(props: WorkspaceProps): React.JSX.Element {
         params: unappliedSourceArgs.dsParams,
       });
       selectEvent(unappliedSourceArgs.dsParams?.eventId);
+      setSelectedLayoutId(unappliedSourceArgs.dsParams?.layoutId as LayoutID);
       setUnappliedSourceArgs({ ds: undefined, dsParams: undefined });
     }
   }, [selectEvent, selectSource, unappliedSourceArgs, setUnappliedSourceArgs]);
@@ -577,7 +581,7 @@ function WorkspaceContent(props: WorkspaceProps): React.JSX.Element {
         {appBar}
         <Sidebars
           selectedKey=""
-          onSelectKey={() => {}}
+          onSelectKey={() => { }}
           items={sidebarItems}
           leftItems={leftSidebarItems}
           bottomItems={sidebarBottomItems}
